@@ -1,68 +1,93 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="https://i.imgur.com/wMoRpTr.jpg">
 
-## Available Scripts
+# Mastermind Settings Lab
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Intro
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In the lesson earlier you:
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+1. Learned how to use React Router to perform client-side routing.
 
-### `npm test`
+2. Refactored the react-mastermind app to render a `<GamePage>` component at the root route.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Added a "Difficulty" `<Link>` to the `<GamePage>` used to navigate to a `<SettingsPage>` component.
 
-### `npm run build`
+3. As a practice exercise, added an additional `<Route>` with a path of `/settings`.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Created a minimal `<SettingsPage>` component that included a "HOME" `<Link>`.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+In this lab, you'll continue to have fun building out react-mastermind using what you know about components, state, props, styling, methods, event handlers, routing and of course, JavaScript.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Set Up
 
-### `npm run eject`
+The starter code for this lab is the same as the completed code from the _React Router_ lesson.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To get set up for this lesson:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `cd` into the folder for this lab.
+- Install the Node modules: `$ npm i`
+- Open the project in VS Code: `$ code .`
+- Open a terminal in VS Code (`ctrl + backtick`)
+- Start the React Dev Server: `$ npm start`
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+After the server starts up, you should see the following in the browser at `localhost:3000`:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<img src="https://i.imgur.com/ibMTm9k.png">
 
-## Learn More
+## Exercises
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+In this lab, you'll be adding the "Difficulty" setting functionality by completing the exercises below.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+When completed, clicking the "Difficulty" link (styled as a button) will display the following:
 
-### Code Splitting
+<img src="https://i.imgur.com/gFjNSt0.png">
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+As you can see, the settings page allows the player to change the difficulty level by selecting the number of colors available to choose from!
 
-### Analyzing the Bundle Size
+1. Currently, the `<GamePage>` component is relying on CSS classes defined in **App.css**. Refactor to cure this inappropriateness by copying the classes in **App.css** over to **GamePage.css** created during the lesson. Update the class names and update **GamePage.jsx** as required to use those class names.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+2. Since both `<App>` & `<GamePage>` rely on a `*-header-footer` class with the same styling, refactor by renaming it to `header-footer` and putting it in **index.css** instead. Update **App.js** & **GamePage.jsx** to use `header-footer`, then you can delete `GamePage-header-footer` from **GamePage.css** and all of the CSS in **App.css**.
 
-### Making a Progressive Web App
+3. There will be three levels of difficulty: 'Easy'; 'Moderate'; and 'Difficult'.  The game's difficulty will be held in a state property named `difficulty`. Add the `difficulty` property to `state` and initialize it with a value of `'Easy'`. However, `difficulty` should not be "reset" if the player clicks the **[New Game]** button.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+	Hint: Not resetting `difficulty` requires that it not be part of the object returned by the `getInitialState` method.  Instead, `difficulty` should be initialized one time on the `state` state object within the `constructor`.
 
-### Advanced Configuration
+4. Using strings such as 'Easy', etc., to represent the `difficulty` is a fantastic way to access the array of colors for a particular difficulty level by using an object as a lookup. Refactor the `colors` array in **App.js** to be an object with keys of `Easy`, `'Moderate` and `Difficult` which hold arrays of 4, 5, or 6 color strings respectively.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+	Hint: The first couple of lines will look like this
 
-### Deployment
+	```js
+	const colors = {
+	  Easy: ['#7CCCE5', '#FDE47F', '#E04644', '#B576AD'],
+	  ...
+	```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+5. Changing the structure of `colors` expectedly broke the code because we were used to passing `colors` as an array to `<GamePage>`. Refactor the value that is assigned to the `colors` prop in `<GamePage>` such that the appropriate array in the refactored `colors` object is passed according to the value of the `difficulty`  state property. With this step complete, the react-mastermind will be working again.
 
-### `npm run build` fails to minify
+6. Now comes the "fun" part - building out the `<SettingsPage>` component so that:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+	- It displays the UI shown above, including the three difficulty levels, with a button to select the level and the colors rendered as pegs. Also, theres a "Cancel" link used to return to the root without changing the difficulty.
+
+	- The button to select the difficulty level is disabled for the currently selected difficulty.
+
+	- Clicking one of difficulty buttons should update the `difficulty` state, initialize a new game, and programmatically route back to the `<GamePage>` page (root route).
+
+	Hints:
+
+	- You can try downloading and using React Developer Tools to browse components and check/modify state & props.
+
+	- `<SettingsPage>` is going to need both the `colors` object and the `difficulty` state property.
+
+	- Since `difficulty` lives in the state of `<App>`, guess where the method to update it will live.
+
+	- You can reuse the `handleNewGameClick` method by passing it down to `<SettingsPage>` calling it to reset the game after you call the method to update the `difficulty`.
+
+	- After updating `difficulty` & invoking `handleNewGameClick`, you can use the technique shown in the _React Router_ lesson to programmatically route to `/`.
+
+Choosing the **Difficult** level will result in the root route displaying this:
+
+<img src="https://i.imgur.com/IaKWyLR.png">
+
+Good luck cracking the code!
