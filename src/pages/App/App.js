@@ -7,18 +7,14 @@ import SettingsPage from '../SettingsPage/SettingsPage';
 const colors = ['#7CCCE5', '#FDE47F', '#E04644', '#B576AD'];
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = this.getInitialState();
+
+  INITIAL_STATE = {
+    selColorIdx: 0,
+    guesses: [this.getNewGuess()],
+    code: this.genCode()
   }
 
-  getInitialState() {
-    return {
-      selColorIdx: 0,
-      guesses: [this.getNewGuess()],
-      code: this.genCode()
-    };
-  }
+  state = this.INITIAL_STATE
 
   getNewGuess() {
     return {
@@ -45,7 +41,7 @@ class App extends Component {
   }
 
   handleNewGameClick = () => {
-    this.setState(this.getInitialState());
+    this.setState(this.INITIAL_STATE);
   }
 
   handlePegClick = (pegIdx) => {
@@ -149,7 +145,7 @@ class App extends Component {
               handleScoreClick={this.handleScoreClick}
             />
           } />
-          <Route exact path='/settings' render={props => 
+          <Route exact path='/settings' render={props =>
             <SettingsPage {...props} />
           } />
         </Switch>
